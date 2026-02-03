@@ -1,0 +1,23 @@
+.footer {
+    margin-top: auto;
+    padding: 20px 0;
+    border-top: 1px solid #e5e7eb;
+    background: white;
+  }
+  
+  .footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    text-align: center;
+  }
+  
+  .footer-text {
+    color: #6b7280;
+    margin-bottom: 5px;
+  }
+  
+  .footer-note {
+    font-size: 12px;
+    color: #9ca3af;
+  }

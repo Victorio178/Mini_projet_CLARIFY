@@ -1,0 +1,50 @@
+.home-page {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .home-main {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+  }
+  
+  .home-content {
+    text-align: center;
+    max-width: 800px;
+  }
+  
+  .home-title {
+    font-size: 60px;
+    font-weight: bold;
+    color: #1f2937;
+    margin-bottom: 20px;
+  }
+  
+  .home-subtitle {
+    font-size: 24px;
+    color: #4b5563;
+    font-style: italic;
+    margin-bottom: 30px;
+  }
+  
+  .home-description {
+    font-size: 18px;
+    color: #6b7280;
+    margin-bottom: 40px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .home-button {
+    margin-bottom: 30px;
+  }
+  
+  .home-note {
+    color: #9ca3af;
+    font-size: 14px;
+  }

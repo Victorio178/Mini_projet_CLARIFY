@@ -1,0 +1,36 @@
+.navbar {
+    background: white;
+    border-bottom: 1px solid #e5e7eb;
+    padding: 15px 0;
+  }
+  
+  .navbar-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .navbar-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+  }
+  
+  .logo-icon {
+    font-size: 24px;
+  }
+  
+  .logo-text {
+    font-size: 24px;
+    font-weight: bold;
+    color: #1f2937;
+  }
+  
+  .navbar-language {
+    color: #6b7280;
+    font-size: 14px;
+  }

@@ -1,0 +1,127 @@
+.question-page {
+    min-height: 100vh;
+  }
+  
+  .question-main {
+    padding: 40px 20px;
+  }
+  
+  .question-container {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .question-title {
+    font-size: 28px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 40px;
+    color: #1f2937;
+  }
+  
+  /* Barre de progression */
+  .progress-section {
+    margin-bottom: 40px;
+  }
+  
+  .progress-info {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    font-size: 14px;
+    color: #6b7280;
+  }
+  
+  .progress-bar {
+    height: 8px;
+    background: #e5e7eb;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #4F46E5, #EC4899);
+    border-radius: 4px;
+    transition: width 0.3s ease;
+  }
+  
+  /* Carte question */
+  .question-card {
+    background: white;
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  }
+  
+  .question-text {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 40px;
+    color: #1f2937;
+    line-height: 1.4;
+  }
+  
+  /* Options de réponse */
+  .options-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 40px;
+  }
+  
+  .option-button {
+    background: white;
+    border: 2px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 20px;
+    text-align: left;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    transition: all 0.3s;
+  }
+  
+  .option-button:hover {
+    border-color: #4F46E5;
+    background: #f5f3ff;
+  }
+  
+  .option-button.selected {
+    border-color: #4F46E5;
+    background: #f5f3ff;
+  }
+  
+  .option-number {
+    width: 40px;
+    height: 40px;
+    background: #4F46E5;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    flex-shrink: 0;
+  }
+  
+  .option-text {
+    flex: 1;
+    font-size: 16px;
+    color: #374151;
+  }
+  
+  .option-check {
+    color: #10B981;
+    font-size: 20px;
+    font-weight: bold;
+  }
+  
+  /* Boutons navigation */
+  .question-buttons {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 30px;
+    border-top: 1px solid #e5e7eb;
+  }
