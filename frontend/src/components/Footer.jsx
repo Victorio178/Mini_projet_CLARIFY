@@ -6,7 +6,7 @@ const Footer = () => {
     <footer className="footer">
       <div className="footer-container">
         <p className="footer-text">
-          Clarify - Projet L2 • Gratuit, anonyme et sans inscription
+          Clarify - mini projet L2 groupe 3
         </p>
         <p className="footer-note">
           ⚠️ Cet outil ne remplace pas un avis médical professionnel

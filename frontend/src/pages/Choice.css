@@ -1,5 +1,10 @@
 .choice-page {
     min-height: 100vh;
+    background: linear-gradient(
+      135deg,
+      #e7effd 0%,
+      rgb(139, 155, 194) 100%
+    );
   }
   
   .choice-main {
@@ -27,7 +32,11 @@
   }
   
   .domain-card {
-    background: white;
+    background: linear-gradient(
+      135deg,
+      #e7effd 0%,
+      rgb(139, 155, 194) 100%
+    );
     border: 2px solid #e5e7eb;
     border-radius: 20px;
     padding: 30px;

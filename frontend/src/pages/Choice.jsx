@@ -17,7 +17,7 @@ const Choice = () => {
   const handleContinue = () => {
     if (selectedDomain) {
       localStorage.setItem('selectedDomain', selectedDomain)
-      navigate('/question')
+      navigate('/form')
     } else {
       alert('Veuillez sélectionner un domaine')
     }
@@ -50,7 +50,7 @@ const Choice = () => {
           </div>
           
           <div className="choice-buttons">
-            <Button type="secondary" onClick={() => navigate('/form')}>
+            <Button type="secondary" onClick={() => navigate('/')}>
               Retour
             </Button>
             

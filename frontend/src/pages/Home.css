@@ -1,7 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=ABeeZee:ital@0;1&display=swap');
 .home-page {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    background: linear-gradient(
+      135deg,
+      #e7effd 0%,
+      rgb(139, 155, 194) 100%
+    );
   }
   
   .home-main {
@@ -25,10 +31,10 @@
   }
   
   .home-subtitle {
-    font-size: 24px;
+    font-size: 50px;
     color: #4b5563;
-    font-style: italic;
     margin-bottom: 30px;
+    font-family: 'ABeeZee', sans-serif;
   }
   
   .home-description {
@@ -45,6 +51,6 @@
   }
   
   .home-note {
-    color: #9ca3af;
-    font-size: 14px;
+    color: #ffffff;
+    font-size: 17px;
   }

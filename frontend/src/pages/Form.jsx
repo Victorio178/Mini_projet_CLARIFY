@@ -26,8 +26,8 @@ const Form = () => {
     // Sauvegarder dans localStorage
     localStorage.setItem('userData', JSON.stringify(formData))
     
-    // Aller au choix du domaine
-    navigate('/choice')
+    
+    navigate('/Question')
   }
 
   return (
@@ -99,7 +99,7 @@ const Form = () => {
             </div>
             
             <div className="form-buttons">
-              <Button type="secondary" onClick={() => navigate('/')}>
+              <Button type="secondary" onClick={() => navigate('/Choice')}>
                 Retour
               </Button>
               

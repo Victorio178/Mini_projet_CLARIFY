@@ -1,7 +1,6 @@
 .navbar {
-    background: white;
-    border-bottom: 1px solid #e5e7eb;
     padding: 15px 0;
+    margin-top: 10px;
   }
   
   .navbar-container {

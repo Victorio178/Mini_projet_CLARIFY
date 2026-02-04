@@ -14,7 +14,7 @@ const Home = () => {
       
       <main className="home-main">
         <div className="home-content">
-          <h1 className="home-title">Clarify</h1>
+          {/* <h1 className="home-title">Clarify</h1> */}
           
           <h2 className="home-subtitle">
             Retrouvez de la clarté dans votre quotidien
@@ -25,7 +25,7 @@ const Home = () => {
           </p>
           
           <div className="home-button">
-            <Button type="primary" onClick={() => navigate('/form')}>
+            <Button type="primary" onClick={() => navigate('/Choice')}>
               Commencer
             </Button>
           </div>
