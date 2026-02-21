@@ -14,11 +14,6 @@
   .question-container {
     max-width: 800px;
     margin: 0 auto;
-    background: linear-gradient(
-      135deg,
-      #e7effd 0%,
-      rgb(139, 155, 194) 100%
-    );
   }
   
   .question-title {
