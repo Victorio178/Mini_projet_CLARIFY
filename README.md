@@ -27,11 +27,3 @@ Si vous n'avez jamais utilisé React :
     cd frontend
     npm start
     npm run dev
-
-
-### *** Kiorazy ..
-
-
-
-
- 
