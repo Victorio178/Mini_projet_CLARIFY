@@ -1,71 +1,33 @@
-import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import Navbar from '../components/Navbar'
-import Button from '../components/Button'
-import './Choice.css'
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import Navbar from '../components/Navbar';
+import './Choice.css';
 
 const Choice = () => {
-  const navigate = useNavigate()
-  const [selectedDomain, setSelectedDomain] = useState(null)
-
-  const domains = [
-    { id: 'mental', name: 'Santé Mentale', description: 'Stress, focus, sommeil...', icon: '🧠' },
-    { id: 'emotions', name: 'Émotions', description: 'Humeur, anxiété, moral...', icon: '❤️' },
-    { id: 'physique', name: 'Physique', description: 'Énergie, poids, tensions...', icon: '⚡' }
-  ]
-
-  const handleContinue = () => {
-    if (selectedDomain) {
-      localStorage.setItem('selectedDomain', selectedDomain)
-      navigate('/form')
-    } else {
-      alert('Veuillez sélectionner un domaine')
-    }
-  }
+  const navigate = useNavigate();
 
   return (
     <div className="choice-page">
       <Navbar />
-      
-      <main className="choice-main">
-        <div className="choice-container">
-          <h1 className="choice-title">Par quoi souhaitez-vous commencer</h1>
-          
-          <div className="domains-grid">
-            {domains.map(domain => (
-              <div
-                key={domain.id}
-                className={`domain-card ${selectedDomain === domain.id ? 'selected' : ''}`}
-                onClick={() => setSelectedDomain(domain.id)}
-              >
-                <div className="domain-icon">{domain.icon}</div>
-                <h3 className="domain-name">{domain.name}</h3>
-                <p className="domain-description">{domain.description}</p>
-                
-                {selectedDomain === domain.id && (
-                  <div className="selection-indicator">✓</div>
-                )}
-              </div>
-            ))}
+      <div className="choice-container">
+        <h1>Choisissez votre expérience</h1>
+        <div className="choice-grid">
+          <div className="card-option" onClick={() => navigate('/ChatGratuit')}>
+            <div className="label">Standard</div>
+            <h3>Mode Gratuit</h3>
+            <p>Accès aux fonctions de base du chat.</p>
+            <button className="opt-btn">Sélectionner</button>
           </div>
-          
-          <div className="choice-buttons">
-            <Button type="secondary" onClick={() => navigate('/')}>
-              Retour
-            </Button>
-            
-            <Button 
-              type="primary" 
-              onClick={handleContinue}
-              disabled={!selectedDomain}
-            >
-              Continuer
-            </Button>
+
+          <div className="card-option premium" onClick={() => navigate('/ChatIA')}>
+            <div className="label gold">Premium</div>
+            <h3>Mode IA Avancée</h3>
+            <p>Analyse clinique et suivi 24h/24.</p>
+            <button className="opt-btn">Débloquer maintenant</button>
           </div>
         </div>
-      </main>
+      </div>
     </div>
-  )
-}
-
-export default Choice
+  );
+};
+export default Choice;

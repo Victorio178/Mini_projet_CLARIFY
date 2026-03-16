@@ -1,0 +1,6 @@
+.plans-container { max-width: 800px; margin: 50px auto; text-align: center; }
+.plans-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 40px; }
+.plan-card { background: white; padding: 40px; border-radius: 25px; cursor: pointer; border: 2px solid transparent; transition: 0.3s; }
+.plan-card:hover { border-color: #4f46e5; transform: translateY(-5px); }
+.plan-card.premium { background: #1e293b; color: white; }
+.plan-card button { margin-top: 20px; padding: 10px 25px; border-radius: 8px; cursor: pointer; }

@@ -1,132 +1,106 @@
 .question-page {
-    min-height: 100vh;
-    background: linear-gradient(
-      135deg,
-      #e7effd 0%,
-      rgb(139, 155, 194) 100%
-    );
-  }
-  
-  .question-main {
-    padding: 40px 20px;
-  }
-  
-  .question-container {
-    max-width: 800px;
-    margin: 0 auto;
-  }
-  
-  .question-title {
-    font-size: 28px;
-    font-weight: bold;
-    text-align: center;
-    margin-bottom: 40px;
-    color: #1f2937;
-  }
-  
-  /* Barre de progression */
-  .progress-section {
-    margin-bottom: 40px;
-  }
-  
-  .progress-info {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 10px;
-    font-size: 14px;
-    color: #6b7280;
-  }
-  
-  .progress-bar {
-    height: 8px;
-    background: #e5e7eb;
-    border-radius: 4px;
-    overflow: hidden;
-  }
-  
-  .progress-fill {
-    height: 100%;
-    background: linear-gradient(90deg, #4F46E5, #EC4899);
-    border-radius: 4px;
-    transition: width 0.3s ease;
-  }
-  
-  /* Carte question */
-  .question-card {
-    background: white;
-    border-radius: 20px;
-    padding: 40px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-  }
-  
-  .question-text {
-    font-size: 24px;
-    font-weight: 600;
-    margin-bottom: 40px;
-    color: #1f2937;
-    line-height: 1.4;
-  }
-  
-  /* Options de réponse */
-  .options-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    margin-bottom: 40px;
-  }
-  
-  .option-button {
-    background: white;
-    border: 2px solid #e5e7eb;
-    border-radius: 12px;
-    padding: 20px;
-    text-align: left;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    transition: all 0.3s;
-  }
-  
-  .option-button:hover {
-    border-color: #4F46E5;
-    background: #f5f3ff;
-  }
-  
-  .option-button.selected {
-    border-color: #4F46E5;
-    background: #f5f3ff;
-  }
-  
-  .option-number {
-    width: 40px;
-    height: 40px;
-    background: #4F46E5;
-    color: white;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-    flex-shrink: 0;
-  }
-  
-  .option-text {
-    flex: 1;
-    font-size: 16px;
-    color: #374151;
-  }
-  
-  .option-check {
-    color: #10B981;
-    font-size: 20px;
-    font-weight: bold;
-  }
-  
-  
-  .question-buttons {
-    display: flex;
-    justify-content: space-between;
-    padding-top: 30px;
-    border-top: 1px solid #e5e7eb;
-  }
+  background: #f8fafc;
+  min-height: 100vh;
+  font-family: 'Inter', sans-serif;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 8px;
+  background: #e2e8f0;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.progress {
+  height: 100%;
+  background: #4f46e5;
+  transition: width 0.4s ease-in-out;
+}
+
+.question-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 60px 20px;
+}
+
+.question-card {
+  background: white;
+  padding: 40px;
+  border-radius: 24px;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.05);
+  width: 100%;
+  max-width: 600px;
+  animation: slideUp 0.4s ease-out;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.step-tag {
+  background: #eef2ff;
+  color: #4f46e5;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.step-counter {
+  color: #64748b;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.question-card h2 {
+  color: #1e293b;
+  font-size: 1.5rem;
+  line-height: 1.4;
+  margin-bottom: 35px;
+  text-align: center;
+}
+
+.options-vertical {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.opt-btn {
+  padding: 18px 25px;
+  border: 2px solid #f1f5f9;
+  border-radius: 16px;
+  background: white;
+  color: #334155;
+  font-size: 1.05rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: left;
+}
+
+.opt-btn:hover {
+  border-color: #4f46e5;
+  background: #f5f3ff;
+  color: #4f46e5;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(79, 70, 229, 0.1);
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 600px) {
+  .question-card { padding: 30px 20px; }
+  .question-card h2 { font-size: 1.3rem; }
+}

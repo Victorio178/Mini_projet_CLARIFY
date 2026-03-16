@@ -1,67 +1,88 @@
 .form-page {
-    min-height: 100vh;
-  }
-  
-  .form-main {
-    padding: 40px 20px;
-    display: flex;
-    justify-content: center;
-  }
-  
-  .form-container {
-    background: white;
-    border-radius: 20px;
-    padding: 40px;
-    max-width: 500px;
-    width: 100%;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-  }
-  
-  .form-title {
-    font-size: 32px;
-    font-weight: bold;
-    text-align: center;
-    margin-bottom: 40px;
-    color: #1f2937;
-  }
-  
-  .form-group {
-    margin-bottom: 25px;
-  }
-  
-  .form-label {
-    display: block;
-    font-size: 18px;
-    font-weight: 600;
-    margin-bottom: 10px;
-    color: #374151;
-  }
-  
-  .form-input {
-    width: 100%;
-    padding: 15px;
-    font-size: 16px;
-    border: 2px solid #d1d5db;
-    border-radius: 10px;
-  }
-  
-  .form-input:focus {
-    outline: none;
-    border-color: #4F46E5;
-  }
-  
-  .form-note {
-    background: #eff6ff;
-    padding: 20px;
-    border-radius: 10px;
-    margin: 30px 0;
-    font-size: 14px;
-    color: #1e40af;
-  }
-  
-  .form-buttons {
-    display: flex;
-    justify-content: space-between;
-    padding-top: 30px;
-    border-top: 1px solid #e5e7eb;
-  }
+  background-color: #f3f4f6;
+  min-height: 100vh;
+  padding-bottom: 50px;
+}
+
+.form-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+}
+
+.consultation-form {
+  background: white;
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+  width: 100%;
+  max-width: 600px;
+}
+
+.consultation-form h2 {
+  color: #1f2937;
+  margin-bottom: 10px;
+}
+
+.form-intro {
+  color: #6b7280;
+  margin-bottom: 30px;
+  font-size: 0.95rem;
+}
+
+.form-section {
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.input-group {
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.input-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+label {
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #374151;
+}
+
+input, select {
+  padding: 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+.radio-group {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.radio-label {
+  background: #f9fafb;
+  padding: 10px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.error-msg {
+  color: #ef4444;
+  font-size: 0.8rem;
+  margin-top: 5px;
+}
+
+.form-footer {
+  margin-top: 30px;
+  text-align: right;
+}

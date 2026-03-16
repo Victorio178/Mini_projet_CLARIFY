@@ -1,180 +1,124 @@
-import React, { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
-import Navbar from '../components/Navbar'
-import Button from '../components/Button'
-import './Result.css'
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Radar, RadarChart, PolarGrid, PolarAngleAxis, ResponsiveContainer, PolarRadiusAxis } from 'recharts';
+import Navbar from '../components/Navbar';
+import './Result.css';
 
 const Result = () => {
-  const navigate = useNavigate()
-  const [result, setResult] = useState(null)
-  const [loading, setLoading] = useState(true)
+  const navigate = useNavigate();
+  const [res, setRes] = useState(null);
 
   useEffect(() => {
-    // Simuler le chargement des données
-    setTimeout(() => {
-      // Récupérer les données
-      const domain = localStorage.getItem('selectedDomain') || 'mental'
-      const userData = JSON.parse(localStorage.getItem('userData') || '{}')
-      const questionnaireResults = JSON.parse(localStorage.getItem('questionnaireResults') || '{}')
-
-      // Calculer le score (ou utiliser celui sauvegardé)
-      const percentage = questionnaireResults.percentage || 65
-      
-      // Déterminer le niveau
-      let level = ''
-      if (percentage < 30) level = 'Très bon'
-      else if (percentage < 50) level = 'Bon'
-      else if (percentage < 70) level = 'Moyen'
-      else level = 'À améliorer'
-
-      setResult({
-        domain: domain,
-        score: percentage,
-        level: level,
-        userData: userData
-      })
-      
-      setLoading(false)
-    }, 1000)
-  }, [])
-
-  const getDomainInfo = (domain) => {
-    switch(domain) {
-      case 'mental': return { name: 'Santé Mentale', icon: '🧠', color: '#4F46E5' }
-      case 'emotions': return { name: 'Émotions', icon: '❤️', color: '#EC4899' }
-      case 'physique': return { name: 'Physique', icon: '⚡', color: '#10B981' }
-      default: return { name: 'Santé Mentale', icon: '🧠', color: '#4F46E5' }
+    const data = JSON.parse(localStorage.getItem('userResults'));
+    if (!data) {
+      navigate('/'); 
+    } else {
+      setRes(data);
     }
-  }
+  }, [navigate]);
 
-  const getRecommendations = (domain, level) => {
-    const baseRecs = {
-      mental: [
-        "Pratiquez 10 minutes de méditation par jour",
-        "Établissez une routine de sommeil régulière",
-        "Prenez des pauses régulières pendant le travail",
-        "Notez 3 choses positives chaque soir"
-      ],
-      emotions: [
-        "Exprimez vos émotions dans un journal",
-        "Pratiquez la gratitude quotidiennement",
-        "Écoutez de la musique qui vous met de bonne humeur",
-        "Parlez à un ami ou un proche de vos sentiments"
-      ],
-      physique: [
-        "Marchez 30 minutes par jour",
-        "Buvez 2L d'eau quotidiennement",
-        "Étirez-vous chaque matin",
-        "Mangez plus de fruits et légumes"
-      ]
+  if (!res) return null;
+
+  // Maximum 9 points par domaine (3 questions x 3 points max)
+  const chartData = [
+    { subject: 'Mental', A: res.scores.mental, fullMark: 9 },
+    { subject: 'Physique', A: res.scores.physique, fullMark: 9 },
+    { subject: 'Emotion', A: res.scores.emotion, fullMark: 9 },
+    { subject: 'Social', A: res.scores.social, fullMark: 9 },
+  ];
+
+  // Le moteur de diagnostic psychologique
+  const getDiagnosis = () => {
+    const s = res.scores;
+    
+    // On vérifie le score le plus critique (au-dessus de 6 sur 9)
+    if (s.mental >= 7) {
+      return { 
+        problem: "Surcharge mentale importante détectée.", 
+        solution: "Vous devez impérativement alléger votre emploi du temps et apprendre à dire non. Votre esprit a besoin d'une pause immédiate." 
+      };
     }
+    if (s.physique >= 7) {
+      return { 
+        problem: "Épuisement physique et fatigue accumulée.", 
+        solution: "Votre corps tire la sonnette d'alarme. Vous devez revoir votre cycle de sommeil et limiter les écrans le soir." 
+      };
+    }
+    if (s.emotion >= 7) {
+      return { 
+        problem: "Instabilité émotionnelle et irritabilité.", 
+        solution: "Vos émotions débordent. Il est recommandé de pratiquer la cohérence cardiaque (respiration) pendant 5 minutes chaque jour." 
+      };
+    }
+    if (s.social >= 7) {
+      return { 
+        problem: "Isolement social marqué.", 
+        solution: "Vous avez tendance à vous renfermer. Essayez de contacter au moins une personne de confiance cette semaine pour en parler." 
+      };
+    }
+    
+    // Si tout est en dessous de 7
+    return { 
+      problem: "Votre équilibre global semble stable.", 
+      solution: "Continuez vos bonnes habitudes ! Quelques exercices de relaxation peuvent vous aider à optimiser votre bien-être." 
+    };
+  };
 
-    return baseRecs[domain] || baseRecs.mental
-  }
-
-  if (loading) {
-    return (
-      <div className="result-page">
-        <Navbar />
-        <div className="loading-container">
-          <div className="loading-spinner"></div>
-          <p>Analyse de vos réponses en cours...</p>
-        </div>
-      </div>
-    )
-  }
-
-  const domainInfo = getDomainInfo(result.domain)
-  const recommendations = getRecommendations(result.domain, result.level)
+  const diagnosis = getDiagnosis();
 
   return (
     <div className="result-page">
       <Navbar />
-      
-      <main className="result-main">
-        <div className="result-container">
-          {/* Titre principal */}
-          <h1 className="result-title">Votre bilan personnalisé est prêt</h1>
+      <main className="result-container">
+        
+        <header className="res-header">
+          <h1>Bilan de {res.pseudo}</h1>
+          <p className="subtitle">Analyse clinique complétée le {res.date}</p>
+        </header>
 
-          {/* Score principal */}
-          <div className="score-section">
-            <div className="score-display">
-              <div className="score-value">{result.score}/100</div>
-              <div className="score-label">Votre score de clarté</div>
-            </div>
-
-            {/* Indicateur de progression */}
-            <div className="progress-indicator">
-              <span>Large 4/4</span>
+        <div className="result-grid">
+          
+          {/* Le Radar Chart */}
+          <div className="card chart-card">
+            <h3>Radar d'Équilibre (sur 9)</h3>
+            <div style={{ width: '100%', height: '300px' }}>
+              <ResponsiveContainer>
+                <RadarChart data={chartData} margin={{ top: 20, right: 30, bottom: 20, left: 30 }}>
+                  <PolarGrid stroke="#e2e8f0" />
+                  <PolarAngleAxis dataKey="subject" tick={{fill: '#475569', fontSize: 13, fontWeight: 600}} />
+                  <PolarRadiusAxis domain={[0, 9]} tick={false} axisLine={false} />
+                  <Radar dataKey="A" stroke="#4f46e5" fill="#4f46e5" fillOpacity={0.5} />
+                </RadarChart>
+              </ResponsiveContainer>
             </div>
           </div>
 
-          {/* Domaine et niveau */}
-          <div className="domain-section">
-            <div className="domain-icon-large">{domainInfo.icon}</div>
-            <div className="domain-info">
-              <h2 className="domain-name">{domainInfo.name}</h2>
-              <div 
-                className="level-badge"
-                style={{ 
-                  backgroundColor: domainInfo.color + '20',
-                  color: domainInfo.color 
-                }}
-              >
-                Niveau : {result.level}
-              </div>
+          {/* Le Diagnostic de l'IA */}
+          <div className="card analysis-card">
+            <h3>Diagnostic de l'IA</h3>
+            
+            <div className="diag-block problem">
+              <span className="diag-label">⚠️ Votre problème principal :</span>
+              <p>{diagnosis.problem}</p>
             </div>
             
-            <div className="domain-percentage">
-              <div className="percentage-circle">
-                <span className="percentage-value">{result.score}%</span>
-              </div>
-              <p className="percentage-label">Votre score</p>
+            <div className="diag-block solution">
+              <span className="diag-label">💡 Recommandation :</span>
+              <p>{diagnosis.solution}</p>
             </div>
-          </div>
-
-          {/* Explication */}
-          <div className="explanation-section">
-            <h3 className="section-title">Analyse de votre situation</h3>
-            <p className="explanation-text">
-              Votre score de {result.score}/100 indique que votre situation est "{result.level.toLowerCase()}".
-              {result.score < 50 
-                ? " C'est très encourageant ! Continuez sur cette voie."
-                : " Quelques ajustements peuvent vous aider à vous sentir mieux."
-              }
-            </p>
-          </div>
-
-          {/* Recommandations */}
-          <div className="recommendations-section">
-            <h3 className="section-title">Nos recommandations pour vous</h3>
             
-            <div className="recommendations-list">
-              {recommendations.map((rec, index) => (
-                <div key={index} className="recommendation-card">
-                  <div className="recommendation-number">{index + 1}</div>
-                  <p className="recommendation-text">{rec}</p>
-                </div>
-              ))}
+            {/* L'appel à l'action pour continuer dans le tunnel */}
+            <div className="chat-promo-card" onClick={() => navigate('/Register')}>
+              <h4>💬 Discuter avec l'IA</h4>
+              <p>Clarify peut créer un plan d'action sur-mesure pour vous aider à aller mieux.</p>
+              <button className="promo-btn">Débloquer le Chat</button>
             </div>
-          </div>
-
-          {/* Actions */}
-          <div className="result-actions">
-            <Button type="secondary" onClick={() => navigate('/')}>
-              Revenir au menu
-            </Button>
             
-            <Button type="primary" onClick={() => {
-              alert('Plan généré avec succès !')
-            }}>
-              Recevoir mon plan
-            </Button>
           </div>
         </div>
       </main>
     </div>
-  )
-}
+  );
+};
 
-export default Result
+export default Result;
