@@ -48,7 +48,7 @@ const Form = () => {
           <div className="form-section">
             <div className="input-group">
               <label>Pseudo</label>
-              <input type="text" name="pseudo" required value={formData.pseudo} onChange={handleChange} placeholder="Ex: Victorio" />
+              <input type="text" name="pseudo" required value={formData.pseudo} onChange={handleChange} placeholder="Ex: lita" />
             </div>
 
             <div className="input-row">

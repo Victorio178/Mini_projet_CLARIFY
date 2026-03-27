@@ -42,7 +42,7 @@ const Plans = () => {
             <div className="plan-icon">🌱</div>
             <h3>Mode Gratuit</h3>
             <div className="plan-price">
-              <span className="price">0 €</span>
+              <span className="price">0 Ar</span>
               <span className="period">/ toujours</span>
             </div>
             <p className="plan-desc">Idéal pour découvrir Clarify et obtenir un premier aperçu de votre bien-être.</p>

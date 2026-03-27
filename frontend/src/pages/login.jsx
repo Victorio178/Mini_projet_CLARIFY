@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import axios from 'axios'; // 1. IMPORT D'AXIOS
 import Navbar from '../components/Navbar';
 import './Login.css';
 
@@ -9,23 +10,36 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => { // 2. FONCTION ASYNC
     e.preventDefault();
     setError('');
 
-    // Validation simple côté front
-    if (nom.trim().length < 2) {
-      setError("Veuillez entrer un nom d'utilisateur valide.");
-      return;
-    }
-    if (password.length < 4) {
-      setError("Mot de passe incorrect. Veuillez réessayer.");
-      return;
-    }
+    try {
+      // 3. APPEL RÉEL AU BACKEND
+      const response = await axios.post('http://localhost:5000/api/users/login', {
+        nom: nom.trim(),
+        password: password
+      });
 
-    // Connexion locale (sans backend pour l'instant)
-    localStorage.setItem('userPseudo', nom.trim());
-    navigate('/chat-gratuit');
+      if (response.data.success) {
+        // 4. ON SAUVEGARDE LE NOM OFFICIEL DU COMPTE
+        localStorage.setItem('nom', response.data.nom); 
+        
+        // Optionnel : on peut aussi garder le pseudo pour la compatibilité
+        localStorage.setItem('userPseudo', response.data.nom);
+
+        console.log("✅ Connecté en tant que :", response.data.nom);
+        
+        // 5. REDIRECTION
+        navigate('/chat-gratuit');
+        window.location.reload(); // Force la mise à jour de la Navbar
+      }
+    } catch (err) {
+      // 6. GESTION DES ERREURS (Si le nom ou mdp est faux dans MongoDB)
+      const messageErreur = err.response?.data?.message || "Erreur de connexion au serveur.";
+      setError(messageErreur);
+      console.error("❌ Échec de connexion:", messageErreur);
+    }
   };
 
   return (
@@ -33,7 +47,6 @@ const Login = () => {
       <Navbar />
       <div className="login-container">
         <div className="login-card">
-
           <div className="login-logo-icon">◈</div>
           <h2>Connexion</h2>
           <p>Retrouvez vos résultats et votre historique.</p>
@@ -60,7 +73,6 @@ const Login = () => {
               />
             </div>
 
-            {/* MESSAGE D'ERREUR */}
             {error && (
               <div className="login-error">
                 ⚠️ {error}
@@ -72,11 +84,10 @@ const Login = () => {
             </button>
           </form>
 
-          {/* <div className="login-footer">
-            <span>Pas encore de compte ?</span>
-            <Link to="/register"> Créer un compte</Link>
-          </div> */}
-
+          <div className="login-footer">
+             <span>Pas encore de compte ?</span>
+             <Link to="/register"> Créer un compte</Link>
+          </div>
         </div>
       </div>
     </div>

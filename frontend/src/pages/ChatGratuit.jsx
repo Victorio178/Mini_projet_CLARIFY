@@ -19,25 +19,22 @@ const ChatGratuit = () => {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
   const [isTyping, setIsTyping] = useState(false);
-  const [userName, setUserName] = useState('');
+  const [displayName, setDisplayName] = useState(''); // Changé pour plus de clarté
   const bottomRef = useRef(null);
 
   useEffect(() => {
-    // 1. On cherche d'abord le NOM de l'utilisateur INSCRIT (Compte MongoDB)
-    const nomCompte = localStorage.getItem('nom'); 
+    // 1. PRIORITÉ ABSOLUE : Le nom saisi lors de l'inscription (Nom Complet)
+    const nomInscription = localStorage.getItem('nom'); 
     
-    // 2. On cherche le PSEUDO de l'ANALYSE (Quiz temporaire)
+    // 2. SECOURS : Le pseudo de l'analyse ou du quiz
     const results = JSON.parse(localStorage.getItem('userResults'));
     const profile = JSON.parse(localStorage.getItem('userProfile'));
     const pseudoAnalyse = results?.pseudo || profile?.pseudo;
 
-    // --- LA PRIORITÉ ---
-    // Si l'utilisateur est connecté, on affiche son NOM DE COMPTE.
-    // Sinon, on affiche le PSEUDO de son analyse.
-    // Sinon, on affiche "Utilisateur".
-    const finalName = nomCompte || pseudoAnalyse || 'Utilisateur';
+    // On définit le nom qui sera affiché dans le <h1>
+    const finalName = nomInscription || pseudoAnalyse || 'Ami(e)';
     
-    setUserName(finalName);
+    setDisplayName(finalName);
   }, []);
 
   useEffect(() => {
@@ -81,8 +78,10 @@ const ChatGratuit = () => {
           <div className="welcome-card">
             <div className="welcome-avatar">💬</div>
             <div className="welcome-badge">Chat Gratuit</div>
-            {/* Affichage dynamique du nom de l'utilisateur inscrit */}
-            <h1>Bonjour {userName} 👋</h1>
+            
+            {/* Ici on utilise displayName qui contient le nom de l'inscription */}
+            <h1>Bonjour {displayName} 👋</h1>
+            
             <p>Votre espace d'écoute personnel est prêt. Notre assistant est disponible pour vous accompagner et vous aider à mieux comprendre votre bien-être.</p>
 
             <div className="welcome-rules">
