@@ -38,6 +38,11 @@ app.get("/", (req, res) => {
 
 // --- Demarrage du serveur ---
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   console.log("Serveur demarre sur le port " + PORT);
+});
+
+server.on('error', (err) => {
+  console.error('Erreur démarrage serveur:', err);
+  process.exit(1);
 });
