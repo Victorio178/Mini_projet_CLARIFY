@@ -1,35 +1,94 @@
 .navbar {
-    padding: 15px 0;
-    margin-top: 10px;
-  }
-  
-  .navbar-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .navbar-logo {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    text-decoration: none;
-  }
-  
-  .logo-icon {
-    font-size: 24px;
-  }
-  
-  .logo-text {
-    font-size: 24px;
-    font-weight: bold;
-    color: #1f2937;
-  }
-  
-  .navbar-language {
-    color: #6b7280;
-    font-size: 14px;
-  }
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 1000;
+  padding: 18px 0;
+  transition: all 0.4s ease;
+}
+
+.navbar--scrolled {
+  background: var(--nav-bg);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(128,128,128,0.15);
+  padding: 12px 0;
+}
+
+.navbar-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 28px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* LOGO */
+.navbar-logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+}
+
+.logo-symbol,
+.logo-text {
+  font-size: 22px;
+  font-weight: 800;
+  background: linear-gradient(135deg, #6366f1, #a855f7);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ACTIONS */
+.navbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* BOUTON THEME - utilise les variables CSS de styles.css */
+.theme-toggle {
+  padding: 8px 18px;
+  border-radius: 100px;
+  border: 1px solid var(--text-sub);
+  background: transparent;
+  color: var(--text-main);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.theme-toggle:hover {
+  background: var(--card-bg);
+  transform: translateY(-1px);
+}
+
+/* BOUTON SE CONNECTER */
+.btn-login {
+  padding: 10px 22px;
+  border-radius: 100px;
+  border: none;
+  background: linear-gradient(135deg, #6366f1, #a855f7);
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(99, 102, 241, 0.35);
+  font-family: inherit;
+}
+
+.btn-login:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(99, 102, 241, 0.5);
+}
+
+@media (max-width: 600px) {
+  .navbar-container { padding: 0 16px; }
+  .btn-login, .theme-toggle { padding: 8px 12px; font-size: 12px; }
+}

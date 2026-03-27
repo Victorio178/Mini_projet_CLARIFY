@@ -1,3 +1,24 @@
+:root {
+  /* MODE NUIT (Défaut) */
+  --bg-main: #020617;        
+  --text-main: #ffffff;       
+  --text-sub: #94a3b8;        
+  --star-color: #ffffff;      
+  --star-opacity: 1;
+  --card-bg: rgba(255, 255, 255, 0.03);
+  --nav-bg: rgba(2, 6, 23, 0.8);
+}
+
+[data-theme='light'] {
+  /* MODE CLAIR (Bien visible) */
+  --bg-main: #ffffff;         /* Blanc pur */
+  --text-main: #000000;       /* NOIR PUR */
+  --text-sub: #1e293b;        /* Gris très sombre */
+  --star-color: #000000;      /* ÉTOILES NOIRES */
+  --star-opacity: 1;       /* Discrètes mais visibles */
+  --card-bg: #f1f5f9;         /* Cartes grises très claires */
+  --nav-bg: rgba(255, 255, 255, 0.8);
+}
 
 * {
   margin: 0;
@@ -7,41 +28,7 @@
 
 body {
   font-family: 'Arial', sans-serif;
-  background: #f5f7fa;
-}
-
-.app {
-  min-height: 100vh;
-}
-
-
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 20px;
-}
-
-.btn {
-  padding: 12px 24px;
-  border-radius: 8px;
-  border: none;
-  font-size: 16px;
-  cursor: pointer;
-  transition: all 0.3s;
-}
-
-.btn-primary {
-  background: linear-gradient(90deg, #4F46E5, #EC4899);
-  color: white;
-}
-
-.btn-secondary {
-  background: white;
-  border: 2px solid #ddd;
-  color: #333;
-}
-
-.btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  background-color: var(--bg-main);
+  color: var(--text-main);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }

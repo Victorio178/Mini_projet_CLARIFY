@@ -79,23 +79,31 @@ const Question = () => {
 
     // 2. Navigation vers la prochaine question
     if (option.next) {
-      // S'il y a un 'next', on reste dans le même domaine
       setCurrentQId(option.next);
       setGlobalStep(globalStep + 1);
     } else {
-      // Sinon (c'était la 3ème question du domaine), on passe au domaine suivant
+      // Si on change de domaine
       if (domainIndex < 3) {
         setDomainIndex(domainIndex + 1);
-        setCurrentQId('q1'); // On recommence à q1 pour le nouveau domaine
+        setCurrentQId('q1');
         setGlobalStep(globalStep + 1);
       } else {
-        // FIN DU TEST (12 questions répondues)
+        // --- FIN DU TEST : LA RÉPARATION EST ICI ---
+        
+        // 1. Récupérer le profil sauvegardé dans Form.jsx
+        const userProfile = JSON.parse(localStorage.getItem('userProfile')) || {};
+
+        // 2. Fusionner le Profil + les nouveaux Scores
         const finalResults = {
-          pseudo: "Utilisateur",
+          ...userProfile, // Ceci inclut pseudo, age, sexe, situation, sommeil, sport, ecrans
           scores: newScores,
-          date: new Date().toLocaleDateString()
+          date: new Date().toLocaleDateString('fr-FR')
         };
+
+        // 3. Sauvegarder l'objet COMPLET pour Result.jsx
         localStorage.setItem('userResults', JSON.stringify(finalResults));
+        
+        // 4. Direction la page finale
         navigate('/result');
       }
     }

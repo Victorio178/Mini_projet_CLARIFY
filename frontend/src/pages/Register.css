@@ -1,5 +1,178 @@
-.register-container { height: 80vh; display: flex; align-items: center; justify-content: center; }
-.register-card { background: white; padding: 40px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); width: 350px; text-align: center; }
-.reg-input { width: 100%; padding: 12px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 8px; }
-.main-btn { width: 100%; padding: 12px; background: #4f46e5; color: white; border: none; border-radius: 8px; cursor: pointer; }
-.google-btn { width: 100%; padding: 10px; margin-bottom: 15px; background: white; border: 1px solid #ddd; border-radius: 8px; cursor: pointer; }
+.register-page {
+    min-height: 100vh;
+    background: var(--bg-main);
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .register-container {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 100px 20px 40px;
+  }
+  
+  .register-card {
+    background: var(--card-bg);
+    border: 1px solid rgba(99, 102, 241, 0.15);
+    padding: 48px 40px;
+    border-radius: 28px;
+    width: 100%;
+    max-width: 420px;
+    text-align: center;
+    backdrop-filter: blur(16px);
+    box-shadow: 0 30px 70px rgba(0, 0, 0, 0.3);
+  }
+  
+  [data-theme="light"] .register-card {
+    box-shadow: 0 20px 50px rgba(99, 102, 241, 0.1);
+  }
+  
+  /* TITRE */
+  .register-card h2 {
+    font-size: 1.9rem;
+    font-weight: 800;
+    margin-bottom: 10px;
+    background: linear-gradient(135deg, #6366f1, #a855f7);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  .register-card p {
+    color: var(--text-sub);
+    font-size: 0.95rem;
+    margin-bottom: 32px;
+    line-height: 1.6;
+  }
+  
+  /* INPUTS */
+  .reg-input {
+    width: 100%;
+    padding: 14px 16px;
+    margin-bottom: 12px;
+    border: 1px solid rgba(99, 102, 241, 0.2);
+    border-radius: 12px;
+    font-size: 0.95rem;
+    background: rgba(255,255,255,0.04);
+    color: var(--text-main);
+    outline: none;
+    transition: all 0.2s ease;
+    font-family: inherit;
+    box-sizing: border-box;
+  }
+  
+  [data-theme="light"] .reg-input {
+    background: #f8faff;
+    color: #1e293b;
+  }
+  
+  .reg-input::placeholder {
+    color: var(--text-sub);
+    opacity: 0.6;
+  }
+  
+  .reg-input:focus {
+    border-color: #6366f1;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+    background: rgba(99, 102, 241, 0.05);
+  }
+  
+  /* BOUTON GOOGLE */
+  .google-btn {
+    width: 100%;
+    padding: 13px;
+    margin-bottom: 12px;
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 12px;
+    color: var(--text-main);
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    font-family: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+  
+  [data-theme="light"] .google-btn {
+    border-color: rgba(0,0,0,0.12);
+    color: #1e293b;
+  }
+  
+  .google-btn::before {
+    content: 'G';
+    font-weight: 800;
+    font-size: 1.1rem;
+    background: linear-gradient(135deg, #4285f4, #ea4335, #fbbc04, #34a853);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  .google-btn:hover {
+    background: rgba(255,255,255,0.06);
+    border-color: rgba(255,255,255,0.25);
+    transform: translateY(-1px);
+  }
+  
+  [data-theme="light"] .google-btn:hover {
+    background: rgba(0,0,0,0.04);
+  }
+  
+  /* DIVIDER */
+  .register-card .divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 16px 0;
+    color: var(--text-sub);
+    font-size: 0.8rem;
+  }
+  
+  .register-card .divider::before,
+  .register-card .divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: rgba(255,255,255,0.08);
+  }
+  
+  [data-theme="light"] .register-card .divider::before,
+  [data-theme="light"] .register-card .divider::after {
+    background: rgba(0,0,0,0.08);
+  }
+  
+  /* BOUTON PRINCIPAL */
+  .main-btn {
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(135deg, #6366f1, #a855f7);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: inherit;
+    box-shadow: 0 4px 20px rgba(99, 102, 241, 0.4);
+    margin-top: 4px;
+  }
+  
+  .main-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(99, 102, 241, 0.55);
+  }
+  
+  .main-btn:active {
+    transform: translateY(0);
+  }
+  
+  @media (max-width: 480px) {
+    .register-card { padding: 36px 24px; }
+  }
