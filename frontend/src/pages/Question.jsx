@@ -6,64 +6,63 @@ import './Question.css';
 const Question = () => {
   const navigate = useNavigate();
   
-  // États de progression
-  const [domainIndex, setDomainIndex] = useState(0); // 0:Mental, 1:Physique, 2:Emotion, 3:Social
-  const [currentQId, setCurrentQId] = useState('q1'); // Identifiant de la question en cours
-  const [globalStep, setGlobalStep] = useState(0); // Pour la barre de progression (0 à 11)
+  const [domainIndex, setDomainIndex] = useState(0); 
+  const [currentQId, setCurrentQId] = useState('q1'); 
+  const [globalStep, setGlobalStep] = useState(0); 
   const [scores, setScores] = useState({ mental: 0, physique: 0, emotion: 0, social: 0 });
 
-  // LA BASE DE DONNÉES DE L'ARBRE DE DÉCISION
+  // ARBRE DE DÉCISION BASÉ SUR LE CBI ET DASS-21
   const quizFlow = [
     {
       domain: 'mental',
-      name: 'Santé Mentale',
+      name: 'Charge Cognitive',
       questions: {
-        q1: { text: "Vous sentez-vous souvent débordé(e) en ce moment ?", options: [{ text: "Oui, souvent", next: "q2_oui", pts: 3 }, { text: "Non, je gère", next: "q2_non", pts: 1 }] },
-        q2_oui: { text: "Ce stress vient-il principalement de vos études/travail ?", options: [{ text: "Oui, la pression est forte", next: "q3_pro", pts: 3 }, { text: "Non, c'est plutôt personnel", next: "q3_perso", pts: 2 }] },
-        q2_non: { text: "Avez-vous des difficultés à rester concentré(e) ?", options: [{ text: "Parfois", next: "q3_distrait", pts: 2 }, { text: "Jamais, je suis focus", next: "q3_focus", pts: 1 }] },
-        q3_pro: { text: "Avez-vous l'impression de travailler sans avancer ?", options: [{ text: "Oui, c'est frustrant", pts: 3 }, { text: "Non, je reste productif", pts: 1 }] },
-        q3_perso: { text: "Avez-vous du temps pour vous détendre seul(e) ?", options: [{ text: "Très peu", pts: 3 }, { text: "Assez", pts: 1 }] },
-        q3_distrait: { text: "Oubliez-vous souvent des petites choses (clés, rdv) ?", options: [{ text: "Oui, souvent", pts: 3 }, { text: "Rarement", pts: 1 }] },
-        q3_focus: { text: "Votre charge mentale vous semble-t-elle légère ?", options: [{ text: "Oui, tout va bien", pts: 1 }, { text: "Elle est normale", pts: 2 }] }
+        q1: { text: "Avez-vous l'impression que votre esprit est 'embrumé' en ce moment ?", options: [{ text: "Souvent", next: "q2_brouillard", pts: 3 }, { text: "Rarement", next: "q2_clair", pts: 1 }] },
+        q2_brouillard: { text: "Cette sensation bloque-t-elle vos prises de décision ?", options: [{ text: "Oui, je n'arrive plus à choisir", next: "q3_paralysie", pts: 3 }, { text: "Non, je continue d'avancer", next: "q3_lent", pts: 2 }] },
+        q2_clair: { text: "Arrivez-vous à vous concentrer plus de 20 minutes sans interruption ?", options: [{ text: "Oui, facilement", next: "q3_focus", pts: 1 }, { text: "C'est un combat quotidien", next: "q3_distrait", pts: 3 }] },
+        q3_paralysie: { text: "Agissez-vous souvent par 'pilote automatique' ?", options: [{ text: "Oui, sans réfléchir", pts: 3 }, { text: "Non, je reste conscient", pts: 1 }] },
+        q3_lent: { text: "Oubliez-vous des choses simples (clés, mots) ?", options: [{ text: "Oui, de plus en plus", pts: 3 }, { text: "Non, ma mémoire est stable", pts: 1 }] },
+        q3_focus: { text: "Votre esprit se sent-il reposé le matin ?", options: [{ text: "Oui", pts: 1 }, { text: "Déjà saturé", pts: 2 }] },
+        q3_distrait: { text: "Le moindre bruit vous dérange-t-il ?", options: [{ text: "Énormément", pts: 3 }, { text: "Un peu", pts: 2 }] }
       }
     },
     {
       domain: 'physique',
-      name: 'Santé Physique',
+      name: 'Signaux Somatiques',
       questions: {
-        q1: { text: "Ressentez-vous une fatigue inexpliquée la journée ?", options: [{ text: "Oui, je suis épuisé(e)", next: "q2_fatigue", pts: 3 }, { text: "Non, j'ai de l'énergie", next: "q2_forme", pts: 1 }] },
-        q2_fatigue: { text: "Votre sommeil est-il agité ou trop court ?", options: [{ text: "Oui, je dors mal", next: "q3_sommeil", pts: 3 }, { text: "Je dors bien mais je reste fatigué", next: "q3_medical", pts: 2 }] },
-        q2_forme: { text: "Ressentez-vous des douleurs musculaires (dos, nuque) ?", options: [{ text: "Oui, souvent", next: "q3_douleur", pts: 3 }, { text: "Non, jamais", next: "q3_sain", pts: 1 }] },
-        q3_sommeil: { text: "Regardez-vous des écrans juste avant de dormir ?", options: [{ text: "Oui, toujours", pts: 3 }, { text: "Non, j'évite", pts: 1 }] },
-        q3_medical: { text: "Avez-vous une alimentation équilibrée en ce moment ?", options: [{ text: "Pas vraiment", pts: 3 }, { text: "Oui, je fais attention", pts: 1 }] },
-        q3_douleur: { text: "Passez-vous plus de 6 heures par jour assis(e) ?", options: [{ text: "Oui", pts: 3 }, { text: "Non", pts: 1 }] },
-        q3_sain: { text: "Faites-vous du sport régulièrement ?", options: [{ text: "Oui", pts: 1 }, { text: "Non, je devrais", pts: 2 }] }
+        q1: { text: "Ressentez-vous une fatigue que le sommeil ne semble pas dissiper ?", options: [{ text: "Oui, une fatigue de fond", next: "q2_fatigue", pts: 3 }, { text: "Non, je récupère bien", next: "q2_forme", pts: 1 }] },
+        q2_fatigue: { text: "Votre corps exprime-t-il des tensions (mâchoires, dos) ?", options: [{ text: "Oui, je suis crispé(e)", next: "q3_tension", pts: 3 }, { text: "Non, mon corps est détendu", next: "q3_mou", pts: 1 }] },
+        q2_forme: { text: "Votre énergie fluctue-t-elle brutalement ?", options: [{ text: "Oui, des gros coups de barre", next: "q3_crash", pts: 2 }, { text: "C'est stable", next: "q3_sain", pts: 1 }] },
+        q3_tension: { text: "Avez-vous souvent des maux de tête inexpliqués ?", options: [{ text: "Oui, régulièrement", pts: 3 }, { text: "Rarement", pts: 1 }] },
+        q3_mou: { text: "Ressentez-vous une lourdeur dans vos membres ?", options: [{ text: "Oui", pts: 3 }, { text: "Non", pts: 1 }] },
+        q3_crash: { text: "Avez-vous besoin de stimulants (café, sucre) ?", options: [{ text: "Beaucoup", pts: 3 }, { text: "Peu", pts: 1 }] },
+        q3_sain: { text: "Faites-vous attention à votre posture ?", options: [{ text: "Oui", pts: 1 }, { text: "Je devrais", pts: 2 }] }
       }
     },
     {
       domain: 'emotion',
-      name: 'Santé Émotionnelle',
+      name: 'Régulation Émotionnelle',
       questions: {
-        q1: { text: "Avez-vous des sautes d'humeur soudaines ?", options: [{ text: "Oui, je suis irritable", next: "q2_irritable", pts: 3 }, { text: "Non, je suis plutôt calme", next: "q2_calme", pts: 1 }] },
-        q2_irritable: { text: "Vous mettez-vous en colère pour des détails ?", options: [{ text: "Oui, ça m'arrive", next: "q3_colere", pts: 3 }, { text: "Non, c'est juste de l'impatience", next: "q3_impatience", pts: 2 }] },
-        q2_calme: { text: "Ressentez-vous parfois une tristesse sans raison ?", options: [{ text: "Oui, de temps en temps", next: "q3_triste", pts: 2 }, { text: "Non, je me sens bien", next: "q3_joie", pts: 1 }] },
-        q3_colere: { text: "Arrivez-vous à vous calmer rapidement ?", options: [{ text: "Difficilement", pts: 3 }, { text: "Oui, assez vite", pts: 1 }] },
-        q3_impatience: { text: "Avez-vous l'impression que personne ne vous comprend ?", options: [{ text: "Souvent", pts: 3 }, { text: "Non, ça va", pts: 1 }] },
-        q3_triste: { text: "Avez-vous perdu l'envie de faire vos loisirs habituels ?", options: [{ text: "Oui, un peu", pts: 3 }, { text: "Non, je les fais toujours", pts: 1 }] },
-        q3_joie: { text: "Êtes-vous globalement optimiste pour votre avenir ?", options: [{ text: "Oui, très", pts: 1 }, { text: "Je suis neutre", pts: 2 }] }
+        q1: { text: "Comment réagissez-vous face à un petit imprévu ?", options: [{ text: "Je m'irrite vite", next: "q2_irritable", pts: 3 }, { text: "Je reste calme", next: "q2_calme", pts: 1 }] },
+        q2_irritable: { text: "Cette irritation se transforme-t-elle en colère ?", options: [{ text: "Oui, c'est incontrôlable", next: "q3_colere", pts: 3 }, { text: "Non, c'est juste passager", next: "q3_impatience", pts: 2 }] },
+        q2_calme: { text: "Ressentez-vous une sorte d'indifférence émotionnelle ?", options: [{ text: "Oui, plus rien ne me touche", next: "q3_vide", pts: 3 }, { text: "Non, je suis bien", next: "q3_joie", pts: 1 }] },
+        q3_colere: { text: "Regrettez-vous souvent vos paroles ?", options: [{ text: "Souvent", pts: 3 }, { text: "Rarement", pts: 1 }] },
+        q3_impatience: { text: "Le monde vous semble-t-il trop lent ?", options: [{ text: "Oui, tout m'énerve", pts: 3 }, { text: "Non", pts: 1 }] },
+        q3_vide: { text: "Avez-vous perdu l'envie de rire ?", options: [{ text: "Un peu", pts: 3 }, { text: "Non, j'ai de l'humour", pts: 1 }] },
+        q3_joie: { text: "Avez-vous des projets qui vous font plaisir ?", options: [{ text: "Oui, plusieurs", pts: 1 }, { text: "Pas vraiment", pts: 2 }] }
       }
     },
     {
       domain: 'social',
       name: 'Vie Sociale',
       questions: {
-        q1: { text: "Évitez-vous les sorties avec vos amis en ce moment ?", options: [{ text: "Oui, je préfère rester seul(e)", next: "q2_isole", pts: 3 }, { text: "Non, j'aime voir du monde", next: "q2_entoure", pts: 1 }] },
-        q2_isole: { text: "Est-ce par manque d'énergie ou d'envie ?", options: [{ text: "Je n'ai pas l'énergie", next: "q3_energie", pts: 3 }, { text: "Je n'en ai pas envie", next: "q3_envie", pts: 2 }] },
-        q2_entoure: { text: "Avez-vous une personne de confiance à qui tout dire ?", options: [{ text: "Oui, heureusement", next: "q3_confiance", pts: 1 }, { text: "Pas vraiment", next: "q3_seul", pts: 3 }] },
-        q3_energie: { text: "Répondez-vous rapidement aux messages de vos proches ?", options: [{ text: "Non, je laisse traîner", pts: 3 }, { text: "Oui, j'essaie", pts: 1 }] },
-        q3_envie: { text: "Trouvez-vous les discussions des autres inintéressantes ?", options: [{ text: "Oui, souvent", pts: 3 }, { text: "Non, pas spécialement", pts: 1 }] },
-        q3_confiance: { text: "Sentez-vous que cette personne vous juge parfois ?", options: [{ text: "Oui, un peu", pts: 2 }, { text: "Jamais", pts: 1 }] },
-        q3_seul: { text: "Le fait de ne pas avoir de confident vous pèse-t-il ?", options: [{ text: "Oui, c'est lourd", pts: 3 }, { text: "Non, je gère seul", pts: 2 }] }
+        q1: { text: "Le contact avec les autres vous demande-t-il un effort ?", options: [{ text: "Oui, c'est épuisant", next: "q2_isole", pts: 3 }, { text: "Non, ça me booste", next: "q2_entoure", pts: 1 }] },
+        q2_isole: { text: "Avez-vous tendance à annuler vos sorties au dernier moment ?", options: [{ text: "Oui, souvent", next: "q3_annule", pts: 3 }, { text: "Non, j'assume", next: "q3_force", pts: 2 }] },
+        q2_entoure: { text: "Avez-vous quelqu'un qui écoute sans juger ?", options: [{ text: "Oui", next: "q3_confiance", pts: 1 }, { text: "Pas vraiment", next: "q3_seul", pts: 3 }] },
+        q3_annule: { text: "Vous sentez-vous mieux une fois seul(e) ?", options: [{ text: "Oui, un soulagement", pts: 3 }, { text: "Non, coupable", pts: 1 }] },
+        q3_force: { text: "Jouez-vous un rôle (masque) en public ?", options: [{ text: "Tout le temps", pts: 3 }, { text: "Rarement", pts: 1 }] },
+        q3_confiance: { text: "Parlez-vous de vos doutes à cette personne ?", options: [{ text: "Oui", pts: 1 }, { text: "C'est difficile", pts: 2 }] },
+        q3_seul: { text: "La solitude vous pèse-t-elle ?", options: [{ text: "Oui", pts: 3 }, { text: "Non, je préfère", pts: 2 }] }
       }
     }
   ];
@@ -72,38 +71,26 @@ const Question = () => {
   const currentQuestionData = currentDomainInfo.questions[currentQId];
 
   const handleAnswer = (option) => {
-    // 1. Mise à jour du score
     const newScores = { ...scores };
     newScores[currentDomainInfo.domain] += option.pts;
     setScores(newScores);
 
-    // 2. Navigation vers la prochaine question
     if (option.next) {
       setCurrentQId(option.next);
       setGlobalStep(globalStep + 1);
     } else {
-      // Si on change de domaine
       if (domainIndex < 3) {
         setDomainIndex(domainIndex + 1);
         setCurrentQId('q1');
         setGlobalStep(globalStep + 1);
       } else {
-        // --- FIN DU TEST : LA RÉPARATION EST ICI ---
-        
-        // 1. Récupérer le profil sauvegardé dans Form.jsx
         const userProfile = JSON.parse(localStorage.getItem('userProfile')) || {};
-
-        // 2. Fusionner le Profil + les nouveaux Scores
         const finalResults = {
-          ...userProfile, // Ceci inclut pseudo, age, sexe, situation, sommeil, sport, ecrans
+          ...userProfile,
           scores: newScores,
           date: new Date().toLocaleDateString('fr-FR')
         };
-
-        // 3. Sauvegarder l'objet COMPLET pour Result.jsx
         localStorage.setItem('userResults', JSON.stringify(finalResults));
-        
-        // 4. Direction la page finale
         navigate('/result');
       }
     }
@@ -112,21 +99,16 @@ const Question = () => {
   return (
     <div className="question-page">
       <Navbar />
-      
-      {/* Barre de progression sur 12 */}
       <div className="progress-bar">
         <div className="progress" style={{ width: `${((globalStep + 1) / 12) * 100}%` }}></div>
       </div>
-
       <div className="question-container">
         <div className="question-card">
           <div className="card-header">
             <span className="step-tag">{currentDomainInfo.name}</span>
             <span className="step-counter">Q {globalStep + 1} / 12</span>
           </div>
-          
           <h2>{currentQuestionData.text}</h2>
-          
           <div className="options-vertical">
             {currentQuestionData.options.map((opt, i) => (
               <button key={i} className="opt-btn" onClick={() => handleAnswer(opt)}>

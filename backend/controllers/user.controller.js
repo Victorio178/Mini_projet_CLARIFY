@@ -1,33 +1,37 @@
 const User = require("../models/User.model");
 
+// Inscription
 const register = async (req, res) => {
   try {
-    // 1. On extrait l'email aussi !
     const { nom, email, password } = req.body; 
 
-    // 2. Vérifier si l'utilisateur existe déjà par nom OU email
     const userExists = await User.findOne({ $or: [{ nom }, { email }] });
     if (userExists) return res.status(400).json({ message: "Nom ou Email déjà utilisé" });
 
-    // 3. On passe l'email au nouveau modèle
     const newUser = new User({ nom, email, password }); 
     await newUser.save();
 
-    console.log("👤 Utilisateur créé dans la collection users !");
+    console.log("👤 Utilisateur créé :", nom);
     res.status(201).json({ success: true, message: "Utilisateur créé !" });
   } catch (error) {
-    console.error("❌ Erreur register:", error.message);
     res.status(500).json({ message: error.message });
   }
 };
 
+// Connexion
 const login = async (req, res) => {
   try {
     const { nom, password } = req.body;
-    const user = await User.findOne({ nom });
+    
+    // On cherche l'utilisateur (nettoyage des espaces avec trim)
+    const user = await User.findOne({ nom: nom.trim() });
+
     if (!user || user.password !== password) {
-      return res.status(401).json({ success: false, message: "Erreur nom/password" });
+      return res.status(401).json({ success: false, message: "Nom ou mot de passe incorrect" });
     }
+
+    console.log("✅ Connexion réussie pour :", user.nom);
+    // On renvoie success: true et le nom pour le localStorage
     res.status(200).json({ success: true, nom: user.nom });
   } catch (error) {
     res.status(500).json({ message: error.message });
